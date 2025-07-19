@@ -1,0 +1,535 @@
+<!--
+Kaif Morshed Portfolio
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaif Morshed Portfolio</title>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    /* === GLOBAL STYLES & VARIABLES === */
+    :root {
+      --bg-main: #101624;
+      --bg-section: #181f33;
+      --bg-highlight: #102049;
+      --accent-blue: #1e6fff;
+      --accent-blue-glow: 0 0 10px #339fff, 0 0 2px #1e6fff;
+      --txt-main: #e8eafd;
+      --txt-soft: #a8b4cf;
+      --border-blue: #2446ff;
+      --border-dark: #192040;
+      --radius: 14px;
+      --font-main: 'Inter', Arial, sans-serif;
+      --transition: 0.25s cubic-bezier(.4,1,.7,1);
+      --space: 2.5rem;
+      --space-sm: 1.25rem;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg-main);
+      color: var(--txt-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    a { color: var(--accent-blue); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: #58beff; }
+
+    /* === HEADER / NAVIGATION === */
+    header {
+      background: var(--bg-section);
+      padding: 2.2rem 0 1.25rem;
+      text-align: center;
+      border-bottom: 2px solid var(--border-blue);
+      box-shadow: 0 2px 0 #173f8d22;
+      letter-spacing: 2px;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      letter-spacing: 3px;
+      margin: 0;
+    }
+    nav {/* Sticky blue/black navigation */
+      position: sticky; top: 0;
+      z-index: 99;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      background: linear-gradient(90deg, #101624 60%, #183374 100%);
+      border-bottom: 1px solid #233666;
+      box-shadow: 0 1px 0 #23366655;
+      padding: 0.6rem 0 0.2rem;
+    }
+    nav button {
+      background: transparent;
+      border: none;
+      color: var(--txt-main);
+      font-size: 1.08rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 0.7rem 1.6rem;
+      border-radius: var(--radius);
+      position: relative;
+      outline: none;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    nav button:hover, nav button.active {
+      background: var(--bg-highlight);
+      color: var(--accent-blue);
+    }
+    nav button.active::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 25%; right: 25%; bottom: 10px;
+      height: 2px;
+      background: linear-gradient(90deg,var(--accent-blue),#58beff);
+      border-radius: 2px;
+      box-shadow: var(--accent-blue-glow);
+    }
+
+    /* === SECTION GROUPING === */
+    main {
+      width: 100%;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: var(--space) 1.5rem;
+      box-sizing: border-box;
+    }
+    section {
+      display: none;
+      background: var(--bg-section);
+      margin-bottom: var(--space);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border-blue);
+      box-sizing: border-box;
+      padding: var(--space) var(--space-sm);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 0 #223c6633;
+      transition: background var(--transition), border var(--transition);
+    }
+    section.active {
+      display: block;
+      animation: showSection 0.5s;
+    }
+    @keyframes showSection {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    section h2 {
+      color: var(--accent-blue);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      letter-spacing: 1.5px;
+      border-left: 5px solid var(--accent-blue);
+      padding-left: 1rem;
+      background: linear-gradient(90deg, #1c1f2c 85%, transparent);
+      border-radius: 6px;
+    }
+    /* === ABOUT SECTION === */
+    #about p {
+      font-size: 1.14rem;
+      color: var(--txt-soft);
+      margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+    /* === PROJECT SECTIONS === */
+    /* Generic project tile container layout */
+    .proj-grid {
+      /* Used for project tiles */
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 2rem;
+      margin-top: 1.8rem;
+      width: 100%;
+    }
+    /* Project/Tile Block Style */
+    .project-tile {
+      background: #121829;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border-dark);
+      padding: 1.4rem 1.2rem;
+      transition: border var(--transition), box-shadow var(--transition), background var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .project-tile:hover,
+    .project-tile:focus-within {
+      border: 1.5px solid var(--accent-blue);
+      background: #18265d;
+      box-shadow: 0 0 8px 0 #236ffd22;
+    }
+.project-tile img {
+  border-radius: 10px;
+  margin-bottom: 0.4rem;
+  width: 100%;
+  object-fit: cover;
+  /* aspect-ratio: 4/2.2; REMOVE THIS */
+  border: 1px solid #233b99;
+  background: #0b1226;
+}
+    .project-tile h3 {
+      font-size: 1.18rem;
+      color: var(--accent-blue);
+      margin: 0.5rem 0;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+    }
+    .project-tile ul {
+      margin: 0.2rem 0 0.5rem 1.1rem;
+      font-size: 1rem;
+      color: var(--txt-soft);
+    }
+    .project-tile p {
+      color: var(--txt-soft);
+      margin-bottom: 0.6rem;
+      margin-top: 0.32rem;
+    }
+    /* === GENERAL ENGINEERING CARDS (showcases) === */
+    .showcase {
+      margin-top: 2.2rem;
+      background: linear-gradient(120deg,#151933 75%,#263fb0 100%);
+      border: 2px solid var(--accent-blue);
+      border-radius: var(--radius);
+      padding: 2.2rem 1.4rem 1.5rem;
+      margin-bottom: var(--space);
+      box-shadow: 0 0 0.4rem #183e7f33 inset;
+    }
+    .showcase-title {
+      text-align: left;
+      color: #91beff;
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1.5px solid #2543af33;
+    }
+    .showcase-flex {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .showcase-block {
+      flex: 1 1 260px;
+      background: #142047;
+      border: 1px solid #23469c;
+      border-radius: var(--radius);
+      margin: 0.2rem;
+      min-width: 260px;
+      max-width: 36%;
+      padding: 1rem 1.2rem 0.85rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .showcase-block img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #355ede;
+      aspect-ratio: 4/2.3;
+      margin-bottom: 0.5rem;
+    }
+    .showcase-block ul {
+      color: var(--txt-soft);
+      margin-top: 0.3rem;
+    }
+    .showcase-block h3 {
+      color: var(--accent-blue);
+      font-size: 1.1rem;
+      letter-spacing: 0.2px;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+    .video-thumbnail {
+      position: relative;
+    }
+    .video-thumbnail img {
+      border-radius: 8px;
+      border: 1px solid #355ede;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/2.3;
+    }
+    .play-button {
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 50px; height: 50px;
+      background: url('https://img.icons8.com/ios-filled/100/1e6fff/play--v1.png') no-repeat center center;
+      background-size: 70%;
+      background-color: rgba(16, 36, 54, 0.65);
+      border-radius: 50%;
+      box-shadow: 0 0 8px #2675ff66;
+      pointer-events: none;
+    }
+    /* === RESPONSIVE === */
+    @media (max-width: 800px) {
+      main { padding: 1.2rem; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .showcase-flex { flex-direction: column; }
+      .showcase-block { max-width: 100%; min-width: 90%; }
+      nav { flex-wrap: wrap; gap: 0.7rem; }
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      section { padding: 1.2rem; }
+    }
+    /* === UTILITY CLASSES === */
+    .hidden { display: none; }
+    /* ===== END CSS ===== */
+  </style>
+</head>
+<body>
+
+  <!-- HEADER SECTION -->
+  <header>
+    <h1>Kaif Morshed</h1>
+  </header>
+
+  <!-- NAVIGATION SECTION -->
+  <nav>
+    <!-- Active class handled via JS -->
+    <button id="nav-about" onclick="showSection('about')" class="active">About Me</button>
+    <button id="nav-solidworks" onclick="showSection('solidworks')">SolidWorks</button>
+    <button id="nav-autocad" onclick="showSection('autocad')">AutoCAD</button>
+    <button id="nav-general" onclick="showSection('general')">Engineering</button>
+  </nav>
+
+  <main>
+    <!-- === ABOUT SECTION === -->
+    <section id="about" class="active">
+      <h2>About Me</h2>
+      <p>
+        Hi, I’m <strong>Kaif Morshed</strong> a Mechatronics Engineering student with a passion for building purposeful systems and solving complex problems. From designing CAD models to debugging embedded firmware, I enjoy working at the intersection of mechanical design, electronics, and programming.
+      </p>
+      <p>
+        I’ve developed mobile app frontends and backends at CoinWa, where I worked across multiple layers of the tech stack to deliver clean, intuitive user experiences. At Electrium Mobility, I engineered control software for a remote-controlled skateboard, blending hardware interfacing with real-time responsiveness. These roles strengthened my ability to design robust systems, collaborate across disciplines, and problem-solve efficiently under pressure.
+      </p>
+      <p>
+        My technical toolkit includes SolidWorks, AutoCAD, MATLAB, Java, C/C++, and Python I’m also comfortable with web technologies like React and Node.js. Beyond coding, I love tinkering with hardware, whether it’s building custom PCBs or programming microcontrollers.
+      <p>
+        I’m eager to take on new challenges whether it’s contributing to innovative projects, collaborating on product development, or diving deep into systems that push boundaries.
+      </p>
+    </section>
+
+    <!-- === SOLIDWORKS PROJECTS === -->
+    <section id="solidworks">
+      <h2>SolidWorks Projects</h2>
+      <div class="proj-grid">
+        <div class="project-tile">
+          <img src="images/keychain full.png" alt="Project 1">
+          <h3>MME Keychain</h3>
+          <p>This custom-designed keychain was modeled in AutoCAD and fabricated using CNC machining. Crafted from solid aluminum, the piece features a sleek geometric profile and precise contouring to showcase both creative design and technical manufacturing.</p>
+          <ul>
+            <li>Revolved/extruded features</li>
+            <li>Fillets/chamfers for smooth transitions</li>
+            <li>Hands-on prototyping from concept to product</li>
+            <li>Accurate holes/bores for integration</li>
+            <li>Application of tolerances and dimensional accuracy</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/keychain top plate.png" alt="Project 2">
+          <h3>Keychain Triple-Bore Mounting Top Plate</h3>
+          <p>This component is a practical mounting plate featuring three evenly spaced counterbored holes, making it well-suited for fastening hardware or serving as a reliable structural interface in assemblies. The balanced layout supports consistent alignment and seamless integration into broader mechanical systems.</p>
+          <ul>
+            <li>Utilized extrude and revolve tools for core geometry</li>
+            <li>Implemented counterbores using the Hole Wizard tool</li>
+            <li>Applied sketch constraints and precise dimensioning</li>
+            <li>Created evenly spaced holes through linear patterns</li>
+            <li>Emphasis on symmetry for modular assembly use</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/keychain bottom plate.png" alt="Project 3">
+          <h3>Keychain Flat Triple-Hole Link Plate</h3>
+<p>This part serves as the bottom link plate in the keychain assembly, designed with three evenly spaced through-holes to allow precise alignment with the upper components. Its lightweight and streamlined design makes it ideal for structural support and mechanical linkage within compact assemblies.</p>
+<ul>
+  <li>Extruded base geometry with simple contours</li>
+  <li>Through-holes added using Hole Wizard</li>
+  <li>Accurate sketch constraints and defined dimensions</li>
+  <li>Hole spacing achieved via linear patterning</li>
+  <li>Designed for alignment and structural connection</li>
+</ul>
+
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/keychain spacer.png" alt="Project 4">
+          <h3>Keychain Spacer</h3>
+<p>This component functions as a compact spacer in the keychain assembly, designed to create consistent gaps between keys or attached elements. It enhances both usability and organization, while withstanding everyday handling.</p>
+<ul>
+  <li>Extruded cuts with semicircular profiles</li>
+  <li>Use of circular sketch elements</li>
+  <li>Diameter-specific dimensioning for fit</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/shaft connector.png" alt="Project 5">
+          <h3>CAD Shaft Connector</h3>
+<p>This part is a custom-designed shaft connector built for mechanical linkages and rotating assemblies. It features mirrored cylindrical arms, a central block with a through-hole, and smooth fillets for seamless transitions. The model balances geometry and alignment to support structural stability in motion systems.</p>
+<ul>
+  <li>Revolved and extruded geometry for main features</li>
+  <li>Fillets and chamfers for smooth transitions</li>
+  <li>Symmetry using mirror and pattern tools</li>
+  <li>Precise hole and bore placements for integration</li>
+  <li>Mechanical fit and function considerations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- === AUTOCAD PROJECTS === -->
+    <section id="autocad">
+      <h2>AutoCAD Projects</h2>
+      <div class="proj-grid">
+        <div class="project-tile">
+          <img src="images/keychain autocad.png" alt="AutoCAD Project 1">
+          <h3>MME keychain - 2D Technical Drawing</h3>
+          <p>This detailed AutoCAD drawing presents multiple orthographic views of the assembled keychain, including top, front, and side projections, with precise annotations of critical hole placements and clearances. It emphasizes component fit and alignment, providing a comprehensive representation of how each part interacts in the final assembly.</p>
+          <ul>
+            <li>GD&T dimensioning</li>
+            <li>Assembly-focused dimensioning</li>
+            <li>Hole placement and alignment references</li>
+            <li>Centerline and hidden line usage</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/CAD top plate.png" alt="AutoCAD Project 2">
+          <h3>Keychain Top Plate - 2D Technical Drawing</h3>
+          <p>This AutoCAD drawing includes orthographic projections of the top plate component, focusing on its key geometric features such as outer contours, internal cutouts, and mounting holes. The drawing highlights symmetrical construction and critical tolerances for functional alignment with the bottom plate.</p>
+          <ul>
+            <li>2D orthographic drawing</li>
+            <li>Dimensional symmetry and hole spacing</li>
+            <li>Hidden lines for internal cut geometry</li>
+            <li>Clean technical annotations</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/CAD bottom plate.png" alt="AutoCAD Project 3">
+          <h3>Keychain Bottom Plate - 2D Technical Drawing</h3>
+          <p>This technical drawing showcases the bottom plate with complete orthographic views, including detailed callouts for the cavity features and through-holes. It also utilizes hidden lines and cross-section indicators to clarify internal details necessary for assembly fit and component clearance.</p>
+          <ul>
+          <li>Orthographic layout with aligned views</li> <li>Hidden/internal features clearly marked</li> <li>Precise cavity and cutout dimensions</li> <li>Annotation of part symmetry</li> <li>Manufacturing-ready detail level</li> </ul>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/CAD spacer.png" alt="AutoCAD Project 4">
+          <h3>Keychain Spacer - 2D Technical Drawing</h3>
+          <p>This AutoCAD drawing features multiple orthographic views of the spacer component, emphasizing its cylindrical profile and internal revolved cut. The sectional view provides clarity on its semicircular grooves, ensuring precise tolerances for keychain component spacing.</p>
+          <ul>
+           <li>Front, top, and sectional view (A-A)</li> <li>Cylindrical and revolved feature depiction</li> <li>Dimensional clarity of grooves and radii</li> <li>Sectional cut reveals interior geometry</li> <li>Industry-standard drafting conventions</li>
+          </ul>
+        </div>
+        <div class="project-tile">
+          <img src="images/CAD cylindrical housing.png" alt="AutoCAD Project 3">
+          <h3>Cylindrical Housing - 2D Technical Drawing</h3>
+          <p>This detailed AutoCAD drawing presents a cylindrical mechanical housing using comprehensive multi-view orthographic projections—top, front, right, and bottom—as well as a sectional view (A-A) that reveals the internal structure. The section cut emphasizes the hidden geometry and precise inner diameters, critical for tight-fitting components. The drawing applies precise dimensioning and industry-standard drafting conventions to ensure full clarity for manufacturing and inspection purposes.</p>
+<ul>
+  <li>Multi-view orthographic projection</li>
+  <li>Sectional drawing (cutaway view)</li>
+  <li>Advanced dimensioning and tolerancing</li>
+  <li>Hidden and centerline representation</li>
+  <li>Technical drafting conventions</li>
+  <li>Cylindrical and symmetrical component modeling</li>
+</ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- === GENERAL ENGINEERING SHOWCASES === -->
+    <section id="general">
+      <h2>General Engineering</h2>
+      <div class="showcase">
+        <div class="showcase-title">Impact Reducing Bumper System</div>
+        <div class="showcase-flex">
+          <div class="showcase-block">
+            <h3>What</h3>
+            <img src="images/dynamics bumper.png" alt="Bumper What">
+            <ul>
+              <li>Designed a bumper system to reduce the impact of a collision by 50% while enhancing energy dissipation using limited materials and constraints.</li>
+              <li>Developed a cost-effective solution using popsicle sticks, rubber bands, and glue.</li>
+            </ul>
+          </div>
+          <div class="showcase-block">
+            <h3>How</h3>
+            <img src="images/dynamics bumper diagram.png" alt="Bumper How">
+            <ul>
+              <li>Applied GD&T to optimize the bumper system.</li>
+              <li>Developed MATLAB simulations for analysis.</li>
+            </ul>
+          </div>
+          <div class="showcase-block">
+            <h3>Results</h3>
+            <div class="video-thumbnail">
+              <a href="https://www.youtube.com/embed/E1mUeeNmWD0" target="_blank">
+                <img src="images/bumper video.png" alt="Watch video">
+                <div class="play-button"></div>
+              </a>
+            </div>
+            <p>Achieved a 50% reduction in collision impact with improved design.</p>
+          </div>
+        </div>
+      </div>
+      <div class="showcase">
+        <div class="showcase-title">EV3 Delivery Robot</div>
+        <div class="showcase-flex">
+          <div class="showcase-block">
+            <h3>What</h3>
+            <img src="images/EV3 robot.png" alt="EV3 What">
+            <ul>
+              <li>Developed a smart delivery system with autonomous navigation using LEGO Mindstorms (95% accuracy).</li>
+              <li>Engineered a reliable automated delivery solution.</li>
+            </ul>
+          </div>
+          <div class="showcase-block">
+            <h3>How</h3>
+            <img src="images/ev3 2.jpg" alt="EV3 How">
+            <ul>
+              <li>Programmed in RobotC for auto navigation & path adjustments.</li>
+              <li>Designed sensor placement & claw mechanism.</li>
+            </ul>
+          </div>
+          <div class="showcase-block">
+            <h3>Results</h3>
+            <div class="video-thumbnail">
+              <a href="https://www.youtube.com/shorts/8Ffn10fll-0" target="_blank">
+                <img src="images/EV3 robot yt.png" alt="Watch video">
+                <div class="play-button"></div>
+              </a>
+            </div>
+            <p>Achieved 95% delivery accuracy via sensors and real-time logic.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End main content -->
+  </main>
+
+  <!-- === SECTION SWITCHING MINIMAL JS === -->
+  <script>
+    // Show section & update nav highlight
+    function showSection(id) {
+      document.querySelectorAll("section").forEach((s) => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("nav button").forEach((btn) => btn.classList.remove("active"));
+      document.getElementById('nav-' + id).classList.add("active");
+    }
+  </script>
+
+  <!-- END OF PORTFOLIO PAGE -->
+</body>
+</html>
